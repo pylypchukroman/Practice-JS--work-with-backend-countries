@@ -8,18 +8,19 @@ const DEBOUNCE_DELAY = 300;
 
 
 const searchField = document.querySelector('#search-box');
-const countryList = document.querySelector('.country-list')
+const countryList = document.querySelector('.country-list');
+
 
 
 searchField.addEventListener('input', debounce((countryInput), DEBOUNCE_DELAY));
 
 function countryInput(evt) {
     const countryName = evt.target.value;
-    const normalCountryName = countryName.trim();
-   if(!normalCountryName){
+    const clearCountryName = countryName.trim();
+   if(!clearCountryName){
     countryList.innerHTML = "";
     } else {
-        fetchCountries(normalCountryName)
+        fetchCountries(clearCountryName)
             .then(countries => {
                 if (countries.length > 10) {
                     console.log("Too many matches found. Please enter a more specific name.");
@@ -36,10 +37,23 @@ function countryInput(evt) {
     }
 }
 
+
+function renderFewCountries (countries) {
+const fewCountries = countries.map((country) => {
+    return `<li class="country-item">
+            <div class="country-wraper"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
+            <h2 class="country-name"><b>${country.name.official}</b></h2></div>
+            </li>`
+}).join('')
+
+countryList.innerHTML = fewCountries;
+}
+
+
 function renderOneCountry(countries) {
  const markup = countries.map((country) => {
      return `<li class="country-item">
-            <div class="country-part"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
+            <div class="country-wraper"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
             <h2 class="country-name"><b>${country.name.official}</b></h2></div>
             <p><b>Capital</b> : ${country.capital}</p>
             <p><b>Population</b> : ${country.population}</p>
@@ -48,15 +62,4 @@ function renderOneCountry(countries) {
  }).join('')
 
 countryList.innerHTML = markup;
-}
-
-function renderFewCountries (countries) {
-const fewCountries = countries.map((country) => {
-    return `<li class="country-item">
-            <div class="country-part"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
-            <h2 class="country-name"><b>${country.name.official}</b></h2></div>
-            </li>`
-}).join('')
-
-countryList.innerHTML = fewCountries;
 }
