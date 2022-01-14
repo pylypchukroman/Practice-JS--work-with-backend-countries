@@ -1,15 +1,13 @@
 import './css/styles.css';
 import fetchCountries from './fetchCountries';
 import debounce from 'lodash.debounce';
-
-const DEBOUNCE_DELAY = 300;
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 // console.log(fetchCountries("peru"));
 
-
+const DEBOUNCE_DELAY = 300;
 const searchField = document.querySelector('#search-box');
 const countryList = document.querySelector('.country-list');
-
 
 
 searchField.addEventListener('input', debounce((countryInput), DEBOUNCE_DELAY));
@@ -23,7 +21,7 @@ function countryInput(evt) {
         fetchCountries(clearCountryName)
             .then(countries => {
                 if (countries.length > 10) {
-                    console.log("Too many matches found. Please enter a more specific name.");
+                    Notify.info("Too many matches found. Please enter a more specific name.");
 
                 } else if (countries.length >= 2 && countries.length <= 10) {
                      renderFewCountries  (countries)
@@ -33,7 +31,7 @@ function countryInput(evt) {
                     // console.log('конкретна країна знайдена');
                 }
             })
-            .catch(error =>  console.log('Oops, there is no country with that name'));
+            .catch(error => Notify.failure('Oops, there is no country with that name'));
     }
 }
 
