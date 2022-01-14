@@ -25,13 +25,38 @@ function countryInput(evt) {
                     console.log("Too many matches found. Please enter a more specific name.");
 
                 } else if (countries.length >= 2 && countries.length <= 10) {
-                    console.log('знайдено декілька країн');
-                    console.log(countries);
+                     renderFewCountries  (countries)
+                    // console.log('знайдено декілька країн');
                 } else {
-                    console.log('конкретна країна знайдена');
-                    console.log(countries);
+                    renderOneCountry(countries)
+                    // console.log('конкретна країна знайдена');
                 }
             })
             .catch(error =>  console.log('Oops, there is no country with that name'));
     }
-    }
+}
+
+function renderOneCountry(countries) {
+ const markup = countries.map((country) => {
+     return `<li class="country-item">
+            <div class="country-part"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
+            <h2 class="country-name"><b>${country.name.official}</b></h2></div>
+            <p><b>Capital</b> : ${country.capital}</p>
+            <p><b>Population</b> : ${country.population}</p>
+            <p><b>Languages</b> : ${Object.values(country.languages)}</p>
+            </li>`
+ }).join('')
+
+countryList.innerHTML = markup;
+}
+
+function renderFewCountries (countries) {
+const fewCountries = countries.map((country) => {
+    return `<li class="country-item">
+            <div class="country-part"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
+            <h2 class="country-name"><b>${country.name.official}</b></h2></div>
+            </li>`
+}).join('')
+
+countryList.innerHTML = fewCountries;
+}
