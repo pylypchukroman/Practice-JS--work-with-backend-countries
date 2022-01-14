@@ -42,7 +42,7 @@ function renderFewCountries (countries) {
 const fewCountries = countries.map((country) => {
     return `<li class="country-item">
             <div class="country-wraper"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
-            <h2 class="country-name"><b>${country.name.official}</b></h2></div>
+            <h2 class="country-name-few-countrice"><b>${country.name.official}</b></h2></div>
             </li>`
 }).join('')
 
@@ -55,7 +55,7 @@ function renderOneCountry(countries) {
      return `<li class="country-item">
             <div class="country-wraper"><img class="country-img" src="${country.flags.svg}" width= "50mpx"  alt="${country.name.official}"/>
             <h2 class="country-name"><b>${country.name.official}</b></h2></div>
-            <p><b>Capital</b> : ${country.capital}</p>
+            <p class = "country-capital"><b>Capital</b> : ${country.capital}</p>
             <p><b>Population</b> : ${country.population}</p>
             <p><b>Languages</b> : ${Object.values(country.languages)}</p>
             </li>`
